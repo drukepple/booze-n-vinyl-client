@@ -19,6 +19,37 @@ export const booze = selector({
   }
 })
 
+export const boozeFromIds = selectorFamily({
+  key: "booze/from-id",
+  get: (ids:string[]) => async ({get}) => {
+    const boozeMap = get(boozeById);
+    return ids.map(id => boozeMap[id]);
+  }
+})
+
+function toMap<T>(array:MongoId[]):Record<string, T> {
+  return array.reduce((acc: Record<string, MongoId>, item:MongoId) => {
+    acc[item._id] = item;
+    return acc;
+  }, {}) as unknown as Record<string, T>
+}
+// function toMap<T>(array:T[]):Record<string, T> {
+//   return array.reduce((acc: Record<string, T>, item:T) => {
+//     const itemId = item as MongoId;
+//     acc[itemId._id] = item;
+//     return acc;
+//   }, {})
+// }
+
+
+export const boozeById = selector<Record<string, MongoBooze>>({
+  key: "booze/map",
+  get: async({get}) => {
+    const boozes = get(booze);
+    return toMap<MongoBooze>(boozes)
+  }
+})
+
 export const categoriesById = selector({
   key: "booze/categories/map",
   get: async({get}) => {

@@ -9,7 +9,12 @@ type Booze = {
 type Vinyl = {
   artist: string,
   album: string,
-  ingredients: Booze[],
+  onHand: boolean,
+  genre: string,
+  page: number,
+  year: number,
+  ingredientsA: string[],
+  ingredientsB: string[],
 }
 
 type MongoId = {
@@ -17,6 +22,7 @@ type MongoId = {
 }
 type MongoCategory = Category & MongoId;
 type MongoBooze = Booze & MongoId;
+type MongoVinyl = Vinyl & MongoId;
 
 
 

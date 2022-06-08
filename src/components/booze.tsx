@@ -1,11 +1,11 @@
 import {useEffect, useState} from 'react';
 import styled from '@emotion/styled';
-import { useRecoilRefresher_UNSTABLE, useRecoilValue } from 'recoil';
-import { List, ListItem, ListItemIcon, ListItemText, Checkbox, FormControl, FormControlLabel, InputLabel, Select, MenuItem, Button, Tooltip , IconButton, Dialog, DialogContent, DialogActions} from '@mui/material';
+import { useRecoilRefresher_UNSTABLE } from 'recoil';
+import { List, ListItem, ListItemIcon, ListItemText, Checkbox, Button, Tooltip, IconButton, Dialog, DialogContent, DialogActions} from '@mui/material';
 import {useLoadable} from '../store/use-loadable';
-import { booze as boozeSel, categories, categoriesById } from '../store/booze';
+import { booze as boozeSel, categories } from '../store/booze';
 import { deleteBooze, patchBooze, postBooze } from '../services/booze';
-import { DeleteOutline, Edit, EditOutlined } from '@mui/icons-material';
+import { DeleteOutline, EditOutlined } from '@mui/icons-material';
 import BoozeForm from './booze-form';
 
 
@@ -31,18 +31,18 @@ const ColumnList = styled(({children, ...props}) => (
   '@media (min-width: 1000px)': {
     height: 600,
     '& li': {
-      width: '12%',
+      width: '20%',
     }
   },
   '@media (min-width: 1200px)': {
     height: 500,
     '& li': {
-      width: '10%',
+      width: '16%',
     }
   },
 }))
 
-export default function CreateBooze() {
+export default function Booze() {
   const { loading:catsLoading, data: cats } = useLoadable(categories);
   const { loading, data: boozes } = useLoadable<MongoBooze[]>(boozeSel);
   const refreshBooze = useRecoilRefresher_UNSTABLE(boozeSel);
@@ -70,7 +70,7 @@ export default function CreateBooze() {
       <h1>Booze</h1>
       {loading && <p>Booze loading...</p>}
       <ColumnList dense={true}>
-        {boozes?.map(booze => <BoozeItem booze={booze} />)}
+        {boozes?.map(booze => <BoozeItem key={booze._id} booze={booze} />)}
       </ColumnList>
 
       <BoozeForm initialBooze={{onHand:true, name:'', category: ''}} onSubmit={addBooze} />

@@ -1,15 +1,13 @@
-import React from 'react';
 import { styled } from '@mui/material/styles';
-// import logo from './logo.svg';
 import './App.css';
-import Button from '@mui/material/Button';
-import { List, ListItem, ListItemText, ListItemIcon, Checkbox, TextField } from '@mui/material';
+import Booze from './components/booze';
 import CreateCategory from './components/create-category';
-import CreateBooze from './components/add-booze';
+import Vinyl from './components/vinyl/vinyl';
 
 
 const Section = styled('div')(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
+  padding: 10,
   '& .listIcon': {
     minWidth: 0,
   },
@@ -24,7 +22,10 @@ function App() {
   return (
     <div className="App">
     <Section>
-        <CreateBooze />
+        <Vinyl />
+    </Section>
+    <Section>
+        <Booze />
     </Section>
     <CreateCategory />
     </div>
